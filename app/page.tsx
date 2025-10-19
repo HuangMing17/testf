@@ -4,121 +4,248 @@ import { useState, useEffect } from 'react'
 
 export default function Home() {
     const [mounted, setMounted] = useState(false)
+    const [currentScene, setCurrentScene] = useState(0)
+    const [isPlaying, setIsPlaying] = useState(true)
+    const [showTypewriter, setShowTypewriter] = useState(false)
+
+    const scenes = [
+        {
+            id: 0,
+            title: "Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10! 🌸",
+            content: "Hoàng Minh chúc yu một ngày 20/10 thật ý nghĩa và hạnh phúc!",
+            type: "hero"
+        },
+        {
+            id: 1,
+            title: "Bó Hoa Từ Hoàng Minh 💐",
+            content: "Hoàng Minh gửi tặng những bó hoa tươi thắm nhất đến yu !",
+            type: "bouquet"
+        },
+        {
+            id: 2,
+            title: "Lời Chúc Đặc Biệt 💖",
+            content: "Hoàng Minh chúc yu luôn xinh đẹp, khỏe mạnh và thành công!",
+            type: "message"
+        },
+        {
+            id: 3,
+            title: "Sức Mạnh Tuyệt Vời 💪",
+            content: "Hoàng Minh ngưỡng mộ sức mạnh và sự kiên cường của yu !",
+            type: "strength"
+        },
+        {
+            id: 4,
+            title: "Tình Yêu Vô Bờ 💝",
+            content: "Hoàng Minh cảm ơn yu đã mang tình yêu đến thế giới này!",
+            type: "love"
+        },
+        {
+            id: 5,
+            title: "Vẻ Đẹp Rạng Ngời ✨",
+            content: "Hoàng Minh chúc yu luôn tỏa sáng với vẻ đẹp tự nhiên!",
+            type: "beauty"
+        }
+    ]
 
     useEffect(() => {
         setMounted(true)
     }, [])
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentScene((prev) => (prev + 1) % scenes.length)
+        }, 4000) // Chuyển scene mỗi 4 giây
+
+        return () => clearInterval(interval)
+    }, [scenes.length])
+
+    useEffect(() => {
+        if (currentScene === 2) {
+            const timer = setTimeout(() => setShowTypewriter(true), 1000)
+            return () => clearTimeout(timer)
+        } else {
+            setShowTypewriter(false)
+        }
+    }, [currentScene])
+
+    // Auto-play only, no manual controls
+
     if (!mounted) {
         return null
     }
 
-    return (
-        <main className="min-h-screen">
-            {/* Hero Section */}
-            <section className="hero">
-                <div className="hero-content animate-fade-in-up">
-                    <h1>Hello People! 👋</h1>
-                    <p>
-                        Chào mừng bạn đến với ứng dụng Next.js được tối ưu hóa cho mobile.
-                        Trang web này được thiết kế để load nhanh và hoạt động mượt mà trên mọi thiết bị.
-                    </p>
-                    <button
-                        className="cta-button"
-                        onClick={() => {
-                            alert('Xin chào! Đây là ứng dụng Next.js được tối ưu cho mobile! 🚀')
-                        }}
-                    >
-                        Khám phá ngay
-                    </button>
-                </div>
-            </section>
+    const renderScene = (scene: any) => {
+        switch (scene.type) {
+            case 'hero':
+                return (
+                    <div className="hero-content animate-zoom-in">
+                        <h1 className="animate-glow">{scene.title}</h1>
+                        <p className="animate-slide-left">{scene.content}</p>
+                        <button
+                            className="cta-button animate-bounce-in"
+                            onClick={() => {
+                                alert('Hoàng Minh chúc bạn ngày 20/10 thật tuyệt vời! 💖✨')
+                            }}
+                        >
+                            Gửi lời chúc 💌
+                        </button>
+                    </div>
+                )
 
-            {/* Features Section */}
-            <section className="features">
-                <div className="container">
-                    <h2 style={{
-                        textAlign: 'center',
-                        fontSize: 'clamp(2rem, 6vw, 3rem)',
-                        fontWeight: '700',
-                        marginBottom: '1rem',
-                        color: '#1f2937'
-                    }}>
-                        Tại sao chọn chúng tôi?
-                    </h2>
-                    <p style={{
-                        textAlign: 'center',
-                        fontSize: '1.2rem',
-                        color: '#6b7280',
-                        maxWidth: '600px',
-                        margin: '0 auto'
-                    }}>
-                        Ứng dụng được tối ưu hóa với các tính năng hiện đại
-                    </p>
+            case 'bouquet':
+                return (
+                    <div className="bouquet-container">
+                        <div className="bouquet animate-wiggle">💐</div>
+                        <h2 className="animate-float-up" style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', marginBottom: '2rem', color: '#1f2937' }}>
+                            {scene.title}
+                        </h2>
+                        <p className="animate-slide-right" style={{ fontSize: '1.5rem', color: '#6b7280', maxWidth: '600px' }}>
+                            {scene.content}
+                        </p>
+                        {/* Floating flowers with enhanced animation */}
+                        {[...Array(9)].map((_, i) => (
+                            <div key={i} className="flower animate-bounce-in" style={{ animationDelay: `${i * 0.2}s` }}>
+                                {['🌸', '🌺', '🌻', '🌷', '🌹', '🌼', '🌿', '🍀', '🌱'][i]}
+                            </div>
+                        ))}
+                    </div>
+                )
 
-                    <div className="features-grid">
-                        <div className="feature-card">
-                            <div className="feature-icon">⚡</div>
-                            <h3>Tốc độ cao</h3>
-                            <p>
-                                Load nhanh chóng với Next.js 14, tối ưu hóa cho mobile và desktop
-                            </p>
+            case 'message':
+                return (
+                    <div className="message-card animate-fade-scale">
+                        <h2 className="animate-glow" style={{
+                            fontSize: 'clamp(1.8rem, 5vw, 2.5rem)',
+                            marginBottom: '2rem',
+                            background: 'linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #f9a8d4 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text'
+                        }}>
+                            {scene.title}
+                        </h2>
+                        <div className="animate-slide-left" style={{ fontSize: '1.2rem', lineHeight: '1.8', color: '#4b5563' }}>
+                            {showTypewriter ? (
+                                <div className="typewriter">
+                                    {scene.content}
+                                </div>
+                            ) : (
+                                scene.content
+                            )}
                         </div>
-
-                        <div className="feature-card">
-                            <div className="feature-icon">📱</div>
-                            <h3>Mobile First</h3>
-                            <p>
-                                Thiết kế responsive hoàn hảo, tối ưu cho mọi kích thước màn hình
-                            </p>
-                        </div>
-
-                        <div className="feature-card">
-                            <div className="feature-icon">🚀</div>
-                            <h3>Deploy dễ dàng</h3>
-                            <p>
-                                Tích hợp sẵn với Vercel, deploy chỉ với một click
-                            </p>
-                        </div>
-
-                        <div className="feature-card">
-                            <div className="feature-icon">🔧</div>
-                            <h3>Dễ tùy chỉnh</h3>
-                            <p>
-                                Code sạch, cấu trúc rõ ràng, dễ dàng mở rộng và bảo trì
-                            </p>
-                        </div>
-
-                        <div className="feature-card">
-                            <div className="feature-icon">🎨</div>
-                            <h3>Giao diện đẹp</h3>
-                            <p>
-                                UI/UX hiện đại với gradient và animation mượt mà
-                            </p>
-                        </div>
-
-                        <div className="feature-card">
-                            <div className="feature-icon">⚙️</div>
-                            <h3>SEO tối ưu</h3>
-                            <p>
-                                Meta tags, Open Graph, Twitter Cards được cấu hình sẵn
-                            </p>
+                        <div style={{ marginTop: '2rem', fontSize: '1.5rem', color: '#ec4899' }}>
+                            <span className="animate-sparkle">💖</span>
+                            <span className="animate-sparkle" style={{ animationDelay: '0.5s' }}>✨</span>
+                            <span className="animate-sparkle" style={{ animationDelay: '1s' }}>🌸</span>
+                            <span className="animate-sparkle" style={{ animationDelay: '1.5s' }}>💕</span>
+                            <span className="animate-sparkle" style={{ animationDelay: '2s' }}>🌟</span>
                         </div>
                     </div>
-                </div>
-            </section>
+                )
 
-            {/* Footer */}
-            <footer className="footer">
-                <div className="container">
-                    <p>
-                        © 2024 Hello People - Được xây dựng với Next.js và deploy trên Vercel
-                    </p>
-                    <p style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>
-                        🚀 Sẵn sàng để deploy!
-                    </p>
-                </div>
-            </footer>
+            case 'strength':
+                return (
+                    <div className="message-card animate-zoom-in">
+                        <div className="animate-bounce-in" style={{ fontSize: '6rem', marginBottom: '2rem' }}>💪</div>
+                        <h2 className="animate-float-up" style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', marginBottom: '2rem', color: '#1f2937' }}>
+                            {scene.title}
+                        </h2>
+                        <p className="animate-slide-right" style={{ fontSize: '1.5rem', color: '#6b7280', maxWidth: '600px' }}>
+                            {scene.content}
+                        </p>
+                    </div>
+                )
+
+            case 'love':
+                return (
+                    <div className="message-card animate-fade-scale">
+                        <div className="animate-wiggle" style={{ fontSize: '6rem', marginBottom: '2rem' }}>💝</div>
+                        <h2 className="animate-glow" style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', marginBottom: '2rem', color: '#1f2937' }}>
+                            {scene.title}
+                        </h2>
+                        <p className="animate-slide-left" style={{ fontSize: '1.5rem', color: '#6b7280', maxWidth: '600px' }}>
+                            {scene.content}
+                        </p>
+                    </div>
+                )
+
+            case 'beauty':
+                return (
+                    <div className="message-card animate-zoom-in">
+                        <div className="animate-bounce-in" style={{ fontSize: '6rem', marginBottom: '2rem' }}>✨</div>
+                        <h2 className="animate-float-up" style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', marginBottom: '2rem', color: '#1f2937' }}>
+                            {scene.title}
+                        </h2>
+                        <p className="animate-slide-right" style={{ fontSize: '1.5rem', color: '#6b7280', maxWidth: '600px' }}>
+                            {scene.content}
+                        </p>
+                    </div>
+                )
+
+            default:
+                return null
+        }
+    }
+
+    return (
+        <main className="min-h-screen">
+            {/* Progress Bar */}
+            <div className="progress-container">
+                <div
+                    className="progress-bar"
+                    style={{ width: `${((currentScene + 1) / scenes.length) * 100}%` }}
+                />
+            </div>
+
+            {/* Video Container with Split Transition */}
+            <div className="video-container">
+                {scenes.map((scene, index) => (
+                    <div
+                        key={scene.id}
+                        className={`scene ${index === currentScene ? 'active' : index < currentScene ? 'prev' : ''}`}
+                    >
+                        {renderScene(scene)}
+                    </div>
+                ))}
+            </div>
+
+            {/* Enhanced Floating Elements */}
+            <div className="floating-hearts">
+                {[...Array(12)].map((_, i) => (
+                    <div key={i} className="floating-heart animate-bounce-in" style={{ animationDelay: `${i * 0.3}s` }}>
+                        {['💖', '💕', '💗', '💓', '💝', '💘', '💞', '💟', '❤️', '🧡', '💛', '💚'][i]}
+                    </div>
+                ))}
+            </div>
+
+            {/* Enhanced Sparkles */}
+            <div className="sparkles">
+                {[...Array(15)].map((_, i) => (
+                    <div key={i} className="sparkle animate-sparkle" style={{ animationDelay: `${i * 0.2}s` }}>
+                        {['✨', '⭐', '🌟', '💫', '⭐', '✨', '🌟', '💫', '⭐', '✨', '🌟', '💫', '⭐', '✨', '🌟'][i]}
+                    </div>
+                ))}
+            </div>
+
+            {/* Additional floating elements for movie effect */}
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+                {[...Array(20)].map((_, i) => (
+                    <div
+                        key={i}
+                        style={{
+                            position: 'absolute',
+                            left: `${Math.random() * 100}%`,
+                            top: `${Math.random() * 100}%`,
+                            fontSize: '1.5rem',
+                            animation: `float 6s ease-in-out infinite`,
+                            animationDelay: `${Math.random() * 6}s`,
+                            opacity: 0.7
+                        }}
+                    >
+                        {['🌸', '🌺', '🌻', '🌷', '🌹', '🌼', '🌿', '🍀', '🌱', '🌾', '🌵', '🌲', '🌳', '🌴', '🌰', '🌰', '🌰', '🌰', '🌰', '🌰'][i]}
+                    </div>
+                ))}
+            </div>
         </main>
     )
 }

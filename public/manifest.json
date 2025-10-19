@@ -1,11 +1,11 @@
 {
-    "name": "Hello People - Next.js App",
-    "short_name": "Hello People",
-    "description": "A simple and fast Next.js app optimized for mobile devices",
+    "name": "Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 - HuangMing17",
+    "short_name": "20/10 Tribute",
+    "description": "Trang web chúc mừng ngày 20/10 đặc biệt với hoạt ảnh đẹp và dấu ấn cá nhân của HuangMing17",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#667eea",
-    "theme_color": "#3b82f6",
+    "background_color": "#fdf2f8",
+    "theme_color": "#ec4899",
     "orientation": "portrait-primary",
     "icons": [
         {
@@ -22,8 +22,8 @@
         }
     ],
     "categories": [
-        "productivity",
-        "utilities"
+        "lifestyle",
+        "celebration"
     ],
     "lang": "vi",
     "dir": "ltr"

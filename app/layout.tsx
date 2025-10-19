@@ -9,27 +9,27 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-    title: 'Hello People - Next.js App',
-    description: 'A simple and fast Next.js app optimized for mobile devices',
-    keywords: ['Next.js', 'React', 'Mobile', 'Fast', 'Vercel'],
-    authors: [{ name: 'Hello People Team' }],
+    title: 'Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 - HuangMing17',
+    description: 'Trang web chúc mừng ngày 20/10 đặc biệt với hoạt ảnh đẹp và dấu ấn cá nhân của HuangMing17',
+    keywords: ['20/10', 'Phụ nữ Việt Nam', 'Chúc mừng', 'HuangMing17', 'Ngày phụ nữ', 'Tribute'],
+    authors: [{ name: 'HuangMing17' }],
     viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-    themeColor: '#3b82f6',
+    themeColor: '#ec4899',
     manifest: '/manifest.json',
     icons: {
         icon: '/favicon.ico',
         apple: '/apple-touch-icon.png',
     },
     openGraph: {
-        title: 'Hello People - Next.js App',
-        description: 'A simple and fast Next.js app optimized for mobile devices',
+        title: 'Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 - HuangMing17',
+        description: 'Trang web chúc mừng ngày 20/10 đặc biệt với hoạt ảnh đẹp và dấu ấn cá nhân của HuangMing17',
         type: 'website',
         locale: 'vi_VN',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Hello People - Next.js App',
-        description: 'A simple and fast Next.js app optimized for mobile devices',
+        title: 'Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10 - HuangMing17',
+        description: 'Trang web chúc mừng ngày 20/10 đặc biệt với hoạt ảnh đẹp và dấu ấn cá nhân của HuangMing17',
     },
 }
 
