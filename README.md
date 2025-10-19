@@ -1,4 +1,4 @@
-# Hello People - Next.js App
+# Hello People - From Hoàng Minh With luv
 
 Một ứng dụng Next.js cơ bản được tối ưu hóa cho mobile với giao diện đẹp và tốc độ load nhanh, sẵn sàng để deploy trên Vercel.
 

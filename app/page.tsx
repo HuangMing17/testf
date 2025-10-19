@@ -12,37 +12,32 @@ export default function Home() {
         {
             id: 0,
             title: "Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10! 🌸",
-            content: "Hoàng Minh chúc yu một ngày 20/10 thật ý nghĩa và hạnh phúc!",
+            content: "Hoàng Minh chúc you một ngày 20/10 thật ý nghĩa và hạnh phúc!",
             type: "hero"
         },
         {
             id: 1,
             title: "Bó Hoa Từ Hoàng Minh 💐",
-            content: "Hoàng Minh gửi tặng những bó hoa tươi thắm nhất đến yu !",
+            content: "Hoàng Minh gửi tặng những bó hoa tươi thắm nhất đến you !",
             type: "bouquet"
         },
         {
             id: 2,
             title: "Lời Chúc Đặc Biệt 💖",
-            content: "Hoàng Minh chúc yu luôn xinh đẹp, khỏe mạnh và thành công!",
+            content: "Hoàng Minh chúc you luôn xinh đẹp, khỏe mạnh và thành công!",
             type: "message"
         },
+
         {
-            id: 3,
-            title: "Sức Mạnh Tuyệt Vời 💪",
-            content: "Hoàng Minh ngưỡng mộ sức mạnh và sự kiên cường của yu !",
-            type: "strength"
-        },
-        {
-            id: 4,
+            id: 33,
             title: "Tình Yêu Vô Bờ 💝",
-            content: "Hoàng Minh cảm ơn yu đã mang tình yêu đến thế giới này!",
+            content: "Hoàng Minh cảm ơn you đã mang tình yêu đến thế giới này!",
             type: "love"
         },
         {
-            id: 5,
+            id: 4,
             title: "Vẻ Đẹp Rạng Ngời ✨",
-            content: "Hoàng Minh chúc yu luôn tỏa sáng với vẻ đẹp tự nhiên!",
+            content: "Hoàng Minh chúc you luôn tỏa sáng với vẻ đẹp tự nhiên!",
             type: "beauty"
         }
     ]
