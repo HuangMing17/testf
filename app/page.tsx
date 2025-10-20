@@ -7,6 +7,9 @@ export default function Home() {
     const [currentScene, setCurrentScene] = useState(0)
     const [isPlaying, setIsPlaying] = useState(true)
     const [showTypewriter, setShowTypewriter] = useState(false)
+    const [showBigHeart, setShowBigHeart] = useState(false)
+    const [playCount, setPlayCount] = useState(0)
+    const [hasFinished, setHasFinished] = useState(false)
 
     const scenes = [
         {
@@ -21,25 +24,15 @@ export default function Home() {
             content: "Hoàng Minh gửi tặng những bó hoa tươi thắm nhất đến you !",
             type: "bouquet"
         },
-        {
-            id: 2,
-            title: "Lời Chúc Đặc Biệt 💖",
-            content: "Hoàng Minh chúc you luôn xinh đẹp, khỏe mạnh và thành công!",
-            type: "message"
-        },
+
 
         {
-            id: 33,
+            id: 2,
             title: "Tình Yêu Vô Bờ 💝",
-            content: "Hoàng Minh cảm ơn you đã mang tình yêu đến thế giới này!",
+            content: "Hoàng Minh chúc you luôn xinh đẹp, khỏe mạnh và thành công!",
             type: "love"
-        },
-        {
-            id: 4,
-            title: "Vẻ Đẹp Rạng Ngời ✨",
-            content: "Hoàng Minh chúc you luôn tỏa sáng với vẻ đẹp tự nhiên!",
-            type: "beauty"
         }
+
     ]
 
     useEffect(() => {
@@ -47,12 +40,31 @@ export default function Home() {
     }, [])
 
     useEffect(() => {
+        if (hasFinished) return
+
         const interval = setInterval(() => {
-            setCurrentScene((prev) => (prev + 1) % scenes.length)
+            setCurrentScene((prev) => {
+                const nextScene = prev + 1
+                if (nextScene >= scenes.length) {
+                    // Kết thúc một lượt chạy
+                    setPlayCount(prevCount => {
+                        const newCount = prevCount + 1
+                        if (newCount >= 2) {
+                            // Đã chạy đủ 2 lần, dừng lại
+                            setHasFinished(true)
+                            return newCount
+                        }
+                        // Chưa đủ 2 lần, reset về scene đầu
+                        return newCount
+                    })
+                    return 0
+                }
+                return nextScene
+            })
         }, 4000) // Chuyển scene mỗi 4 giây
 
         return () => clearInterval(interval)
-    }, [scenes.length])
+    }, [scenes.length, hasFinished])
 
     useEffect(() => {
         if (currentScene === 2) {
@@ -62,6 +74,23 @@ export default function Home() {
             setShowTypewriter(false)
         }
     }, [currentScene])
+
+    useEffect(() => {
+        if (currentScene === scenes.length - 1) {
+            // Hiển thị trái tim lớn sau 3 giây khi scene cuối bắt đầu
+            const timer = setTimeout(() => setShowBigHeart(true), 3000)
+            return () => clearTimeout(timer)
+        } else {
+            setShowBigHeart(false)
+        }
+    }, [currentScene, scenes.length])
+
+    useEffect(() => {
+        if (hasFinished) {
+            // Khi đã chạy đủ 2 lần, hiển thị trái tim lớn cuối cùng
+            setShowBigHeart(true)
+        }
+    }, [hasFinished])
 
     // Auto-play only, no manual controls
 
@@ -98,9 +127,9 @@ export default function Home() {
                             {scene.content}
                         </p>
                         {/* Floating flowers with enhanced animation */}
-                        {[...Array(9)].map((_, i) => (
+                        {[...Array(5)].map((_, i) => (
                             <div key={i} className="flower animate-bounce-in" style={{ animationDelay: `${i * 0.2}s` }}>
-                                {['🌸', '🌺', '🌻', '🌷', '🌹', '🌼', '🌿', '🍀', '🌱'][i]}
+                                {['🌸', '🌺', '🌻', '🌷', '🌹'][i]}
                             </div>
                         ))}
                     </div>
@@ -132,8 +161,6 @@ export default function Home() {
                             <span className="animate-sparkle">💖</span>
                             <span className="animate-sparkle" style={{ animationDelay: '0.5s' }}>✨</span>
                             <span className="animate-sparkle" style={{ animationDelay: '1s' }}>🌸</span>
-                            <span className="animate-sparkle" style={{ animationDelay: '1.5s' }}>💕</span>
-                            <span className="animate-sparkle" style={{ animationDelay: '2s' }}>🌟</span>
                         </div>
                     </div>
                 )
@@ -193,54 +220,76 @@ export default function Home() {
             </div>
 
             {/* Video Container with Split Transition */}
-            <div className="video-container">
-                {scenes.map((scene, index) => (
-                    <div
-                        key={scene.id}
-                        className={`scene ${index === currentScene ? 'active' : index < currentScene ? 'prev' : ''}`}
-                    >
-                        {renderScene(scene)}
-                    </div>
-                ))}
-            </div>
+            {!hasFinished && (
+                <div className="video-container">
+                    {scenes.map((scene, index) => (
+                        <div
+                            key={scene.id}
+                            className={`scene ${index === currentScene ? 'active' : index < currentScene ? 'prev' : ''}`}
+                        >
+                            {renderScene(scene)}
+                        </div>
+                    ))}
+                </div>
+            )}
 
             {/* Enhanced Floating Elements */}
-            <div className="floating-hearts">
-                {[...Array(12)].map((_, i) => (
-                    <div key={i} className="floating-heart animate-bounce-in" style={{ animationDelay: `${i * 0.3}s` }}>
-                        {['💖', '💕', '💗', '💓', '💝', '💘', '💞', '💟', '❤️', '🧡', '💛', '💚'][i]}
-                    </div>
-                ))}
-            </div>
+            {!showBigHeart && !hasFinished && (
+                <div className="floating-hearts">
+                    {[...Array(8)].map((_, i) => (
+                        <div key={i} className="floating-heart animate-bounce-in" style={{ animationDelay: `${i * 0.3}s` }}>
+                            {['💖', '💕', '💗', '💓', '💝', '💘', '💞', '💟'][i]}
+                        </div>
+                    ))}
+                </div>
+            )}
 
             {/* Enhanced Sparkles */}
-            <div className="sparkles">
-                {[...Array(15)].map((_, i) => (
-                    <div key={i} className="sparkle animate-sparkle" style={{ animationDelay: `${i * 0.2}s` }}>
-                        {['✨', '⭐', '🌟', '💫', '⭐', '✨', '🌟', '💫', '⭐', '✨', '🌟', '💫', '⭐', '✨', '🌟'][i]}
-                    </div>
-                ))}
-            </div>
+            {!showBigHeart && !hasFinished && (
+                <div className="sparkles">
+                    {[...Array(8)].map((_, i) => (
+                        <div key={i} className="sparkle animate-sparkle" style={{ animationDelay: `${i * 0.2}s` }}>
+                            {['✨', '⭐', '🌟', '💫', '⭐', '✨', '🌟', '💫'][i]}
+                        </div>
+                    ))}
+                </div>
+            )}
 
             {/* Additional floating elements for movie effect */}
-            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
-                {[...Array(20)].map((_, i) => (
-                    <div
-                        key={i}
-                        style={{
-                            position: 'absolute',
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
-                            fontSize: '1.5rem',
-                            animation: `float 6s ease-in-out infinite`,
-                            animationDelay: `${Math.random() * 6}s`,
-                            opacity: 0.7
-                        }}
-                    >
-                        {['🌸', '🌺', '🌻', '🌷', '🌹', '🌼', '🌿', '🍀', '🌱', '🌾', '🌵', '🌲', '🌳', '🌴', '🌰', '🌰', '🌰', '🌰', '🌰', '🌰'][i]}
-                    </div>
-                ))}
-            </div>
+            {!showBigHeart && !hasFinished && (
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
+                    {[...Array(10)].map((_, i) => (
+                        <div
+                            key={i}
+                            style={{
+                                position: 'absolute',
+                                left: `${Math.random() * 100}%`,
+                                top: `${Math.random() * 100}%`,
+                                fontSize: '1.5rem',
+                                animation: `float 6s ease-in-out infinite`,
+                                animationDelay: `${Math.random() * 6}s`,
+                                opacity: 0.7
+                            }}
+                        >
+                            {['🌸', '🌺', '🌻', '🌷', '🌹', '🌼', '🌿', '🍀', '🌱', '🌾'][i]}
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {/* Big Heart Effect for Ending */}
+            {showBigHeart && (
+                <div className="big-heart-container">
+                    <div className="big-heart animate-pulse">❤️</div>
+                    <div className="big-heart animate-pulse" style={{ animationDelay: '0.5s' }}>💖</div>
+                    <div className="big-heart animate-pulse" style={{ animationDelay: '1s' }}>💕</div>
+                    {hasFinished && (
+                        <div className="signature-text">
+                            From Hoàng Minh with Luv
+                        </div>
+                    )}
+                </div>
+            )}
         </main>
     )
 }
