@@ -49,19 +49,18 @@ export default function Home() {
                     // Kết thúc một lượt chạy
                     setPlayCount(prevCount => {
                         const newCount = prevCount + 1
-                        if (newCount >= 2) {
-                            // Đã chạy đủ 2 lần, dừng lại
+                        if (newCount >= 1) {
+                            // Đã chạy đủ 1 lần, dừng lại
                             setHasFinished(true)
                             return newCount
                         }
-                        // Chưa đủ 2 lần, reset về scene đầu
                         return newCount
                     })
                     return 0
                 }
                 return nextScene
             })
-        }, 4000) // Chuyển scene mỗi 4 giây
+        }, 3000) // Chuyển scene mỗi 3 giây
 
         return () => clearInterval(interval)
     }, [scenes.length, hasFinished])
