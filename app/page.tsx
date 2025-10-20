@@ -21,17 +21,10 @@ export default function Home() {
         {
             id: 1,
             title: "Bó Hoa Từ Hoàng Minh 💐",
-            content: "Hoàng Minh gửi tặng những bó hoa tươi thắm nhất đến you !",
+            content: "Hoàng Minh gửi tặng những bó hoa tươi thắm nhất đến you !  Hoàng Minh chúc you luôn xinh đẹp, khỏe mạnh và thành công!",
             type: "bouquet"
         },
 
-
-        {
-            id: 2,
-            title: "Tình Yêu Vô Bờ 💝",
-            content: "Hoàng Minh chúc you luôn xinh đẹp, khỏe mạnh và thành công!",
-            type: "love"
-        }
 
     ]
 
